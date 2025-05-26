@@ -11,13 +11,9 @@ This service provides a RESTful API for generating text embeddings using differe
 - Configurable model selection via environment variables
 - Comprehensive error handling and logging
 
-## About Our Organization
+## About Memementor
 
-Memementor is dedicated to advancing AI-powered knowledge management solutions. Our embedding service is a core component of our knowledge infrastructure, enabling semantic search, content recommendation, and intelligent document processing.
-
-We believe in building robust, scalable, and accessible AI services that can be integrated into various applications. This embedding service represents our commitment to providing high-quality AI tools for developers and organizations.
-
-For more information about our projects and services, visit [mykb.online](https://mykb.online).
+Memementor is a service leverage LLM to help user find, generate meme pics. The embedding service is a core component, enabling semantic search, matching and text processing. 
 
 ## Setup
 
