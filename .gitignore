@@ -1,0 +1,54 @@
+# Memementor Embedding Service .gitignore
+
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+.venv/
+venv/
+env/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Environment variables - NEVER commit these!
+.env
+
+# Model cache and downloaded models
+.cache/
+.pytorch/
+.sentence_transformers/
+.huggingface/
+
+# Testing and coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# k6 load testing results
+k6_results/
+*.json.gz
+
+# Docker related
+Docker*.env
+
+# Documentation build
+docs/_build/
+docs/site/
