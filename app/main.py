@@ -15,6 +15,7 @@ from fastapi import FastAPI
 from app.core.model_loader import load_models_on_startup
 from app.core.config import settings
 from app.api.v1.endpoints import embeddings as v1_embeddings
+from app.api.v1.endpoints import openai as v1_openai
 from app.utils.error_handlers import install_error_handlers
 
 # TODO: Add metrics collection for monitoring (maybe Prometheus?)
@@ -78,6 +79,13 @@ app.include_router(
     v1_embeddings.router,
     prefix="/v1",  # Version prefix for API versioning
     tags=["Embeddings V1"]
+)
+
+# Wire up OpenAI-compatible API endpoints
+app.include_router(
+    v1_openai.router,
+    prefix="/v1/chat",  # OpenAI-compatible API path at /v1/chat
+    tags=["OpenAI Compatible"]
 )
 
 

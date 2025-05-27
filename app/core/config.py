@@ -41,8 +41,8 @@ class Settings:
         self.DEVICE = os.getenv('DEVICE', 'cpu')
         
         # Load API_KEY for Bearer token authentication
-        self.API_KEY = os.getenv('API_KEY_SECRET')
-        if not self.API_KEY:
+        self.API_KEY_SECRET = os.getenv('API_KEY_SECRET')
+        if not self.API_KEY_SECRET:
             logger.warning("API_KEY_SECRET not set. API will be accessible without authentication.")
         else:
             logger.info("API authentication enabled with Bearer token.")

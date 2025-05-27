@@ -71,6 +71,9 @@ DEVICE="cpu"
 
 # Whether to require authentication (true/false)
 # REQUIRE_AUTH="false"
+
+# Note: When REQUIRE_AUTH is set to "true", all API endpoints including
+# the OpenAI-compatible endpoints will require Bearer token authentication
 ```
 
 ## Running the Service
@@ -154,7 +157,13 @@ Generate embeddings for text using a specified model.
 ```
 
 ## API Documentation
-```
+
+### Interactive Documentation
+
+The service provides interactive API documentation:
+
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
 
 ### API Reference
 
@@ -240,6 +249,84 @@ Generate embeddings for text using a specified model.
 - 400 Bad Request: Invalid model name or other request error
 - 422 Unprocessable Entity: Invalid input format
 - 500 Internal Server Error: Server-side error during embedding generation
+
+### OpenAI-Compatible API
+
+The service also provides an OpenAI-compatible API endpoint that follows the same format as OpenAI's embeddings API, allowing for drop-in replacement in applications that use OpenAI's API.
+
+#### Generate Embeddings (OpenAI-Compatible)
+
+```
+POST /v1/chat/embeddings
+```
+
+Generate embeddings for text using the specified model, following OpenAI's API format.
+
+**Request Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| input | string or array of strings | Yes | Text(s) to embed |
+| model | string | Yes | Model name to use (can be OpenAI model ID or Hugging Face model ID) |
+| encoding_format | string | No | Format of the embeddings (only "float" is supported) |
+| user | string | No | A unique identifier for the end-user (for compatibility only) |
+
+**Example Request:**
+
+```json
+{
+  "input": "The quick brown fox jumps over the lazy dog.",
+  "model": "text-embedding-ada-002",
+  "encoding_format": "float"
+}
+```
+
+**Response:**
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "object": "embedding",
+      "embedding": [0.1, 0.2, ..., -0.05],
+      "index": 0
+    }
+  ],
+  "model": "text-embedding-ada-002",
+  "usage": {
+    "prompt_tokens": 8,
+    "total_tokens": 8
+  }
+}
+```
+
+**Model Mapping:**
+
+The following OpenAI model IDs are automatically mapped to equivalent Hugging Face models:
+
+| OpenAI Model ID | Hugging Face Model |
+|-----------------|--------------------|
+| text-embedding-ada-002 | sentence-transformers/all-MiniLM-L6-v2 |
+| text-embedding-3-small | BAAI/bge-m3 |
+| text-embedding-3-large | BAAI/bge-m3 |
+
+You can also directly use any Hugging Face model ID that's loaded in the service.
+
+**Error Responses:**
+
+Errors follow the OpenAI API error format:
+
+```json
+{
+  "error": {
+    "message": "The model 'non-existent-model' does not exist",
+    "type": "invalid_request_error",
+    "param": "model",
+    "code": "model_not_found"
+  }
+}
+```
 
 ## Testing
 
